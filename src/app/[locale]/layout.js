@@ -12,32 +12,32 @@ import MyFooter from '../components/ui/MyFooter';
 
 export const metadata = {
   title: {
-    default: 'TwitterXDownload - Free Twitter Video Downloader',
-    template: '%s | TwitterXDownload'
+    default: 'SaveX.video - Free Twitter Video Downloader',
+    template: '%s | SaveX.video'
   },
   description: 'Download Twitter videos and media content for free. No registration required. Fast and easy Twitter video downloader. Twitter Media Saver. Twitter X Download.',
   keywords: 'twitter downloader, x video downloader, twitter video download, x.com downloader',
-  authors: [{ name: 'TwitterXDownload' }],
+  authors: [{ name: 'SaveX.video' }],
   robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
   alternates: {
-    canonical: 'https://twitterxdownload.com/',
+    canonical: 'https://SaveX.video/',
   },
   openGraph: {
-    title: 'TwitterXDownload - Free Twitter Video Downloader',
+    title: 'SaveX.video - Free Twitter Video Downloader',
     description: 'Download Twitter videos and media content for free. No registration required.',
     type: 'website',
-    url: 'https://twitterxdownload.com',
-    siteName: 'TwitterXDownload',
+    url: 'https://SaveX.video',
+    siteName: 'SaveX.video',
     images: [{
-      url: 'https://twitterxdownload.com/images/og.png'
+      url: 'https://SaveX.video/images/og.png'
     }]
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@twitterxdownload',
-    title: 'TwitterXDownload - Free Twitter Video Downloader',
+    site: '@SaveX.video',
+    title: 'SaveX.video - Free Twitter Video Downloader',
     description: 'Download Twitter videos and media content for free. No registration required.',
-    images: ['https://twitterxdownload.com/images/og.png']
+    images: ['https://SaveX.video/images/og.png']
   },
   icons: {
     icon: [

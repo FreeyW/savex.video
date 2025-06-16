@@ -59,7 +59,7 @@ export default function RootLayout({ children, params }) {
         <head>
             <GoogleAdsense />
             <GoogleAnalytics />
-            <UmamiAnalytics />
+            <script defer data-domain="savex.video" src="https://stat.re/js/script.js"></script>
         </head>
         <body className="bg-background text-foreground">
             <Providers>

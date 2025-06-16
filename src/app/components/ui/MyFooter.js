@@ -28,7 +28,7 @@ export default function MyFooter({ locale = 'en' }) {
             <div className="hidden md:flex flex-col gap-4">
                 <div>
                     <p className="font-bold mb-2">{t('Contact Us')}</p>    
-                    <Link href="mailto:support@twitterxdownload.com" className="text-sm hover:text-primary">support@twitterxdownload.com</Link>
+                    <Link href="mailto:support@SaveX.video" className="text-sm hover:text-primary">support@SaveX.video</Link>
                 </div>
             </div>
         </div>

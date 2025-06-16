@@ -12,24 +12,24 @@ import { getTranslation } from "@/lib/i18n";
 
 const friendsLink = [
     {
-      name: "Travel Map Video",
-      url: "https://travelmap.video",
-      icon: "https://travelmap.video/images/logo.png"
+      name: "IP address lookup",
+      url: "https://ip.im",
+      icon: "https://favicon.is/ip.im"
     },
     {
-        name: "PDF Tool My",
-        url: "https://pdftoolmy.com",
-        icon: "https://pdftoolmy.com/favicon.svg"
+        name: "Free PDF tools",
+        url: "https://pdf.is",
+        icon: "https://favicon.is/pdf.is"
     },
     {
-        name: "Temp Mail My",
-        url: "https://tempmailmy.com",
-        icon: "https://tempmailmy.com/logo.png"
+        name: "MR.email Temp Mail",
+        url: "https://mr.email",
+        icon: "https://favicon.is/mr.email"
     },
     {
-        name: "Cloud Desktop",
-        url: "https://desktop.dashu.ai",
-        icon: "https://www.thiings.co/_next/image?url=https%3A%2F%2Flftz25oez4aqbxpq.public.blob.vercel-storage.com%2Fimage-V5tMC6Q2PJiLsi6mf9ZfAzI6aJ0aZm.png&w=3840&q=75"
+        name: "URL redirect checker",
+        url: "https://TrueURL.com",
+        icon: "https://favicon.is/trueurl.com"
     }
 ]
 

@@ -1,11 +1,12 @@
 'use client';
-import { Input, Select, SelectItem, Button,Spinner } from "@heroui/react";
+import { Input, Select, SelectItem, Button,Spinner,DatePicker } from "@heroui/react";
 import { RiSearchLine } from "@remixicon/react";
 import { getTranslation } from "@/lib/i18n";
 import { useState, useEffect } from "react";
 import TweetCard from "@/app/components/ui/TweetCard";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import ConfirmModal from "@/app/components/ui/ConfirmModal";
 
 export default function Tweets({ params: { locale } }) {
     const searchParams = useSearchParams();
@@ -44,6 +45,9 @@ export default function Tweets({ params: { locale } }) {
 
     const [shouldSearch, setShouldSearch] = useState(name || screen_name || text);
 
+    const [shouldShowAdultNotice, setShouldShowAdultNotice] = useState(true);
+    const [nextIndex, setNextIndex] = useState(0);
+
     useEffect(() => {
         if (shouldSearch) {
             handleSearch();
@@ -51,45 +55,58 @@ export default function Tweets({ params: { locale } }) {
         }
     }, [shouldSearch]);
 
-    const handleSearch = async ({cursor=null}) => {
+    const handleSearch = async ({cursor=null}={}) => {
+
+        if(shouldShowAdultNotice) {
+            const confirmed = await ConfirmModal.show({
+                title: t('Warning'),
+                description: <div className="text-sm text-default-500">
+                    <p>{t('Search results may contain adult content. You must be at least 18 years old to continue.')}</p>
+                    <DatePicker className="w-full mt-2" label={t('Birth date')} />
+                </div>,
+                cancelText: t('Cancel'),
+                confirmText: t('Confirm')
+            });
+            if(!confirmed) return;
+            setShouldShowAdultNotice(false);
+        }
+
         if(loading) return;
         setLoading(true);
 
-        // 保存当前滚动位置
-        const currentScrollPosition = window.scrollY;
-
-        router.replace(`/tweets?${name ? `name=${name}&` : ''}${screen_name ? `screen_name=${screen_name}&` : ''}${text ? `text=${text}&` : ''}`);
-
         const response = await fetch(`/api/requestdb?action=search&name=${name}&screen_name=${screen_name}&text=${text}&content_type=${content_type}&date_range=${date_range}&cursor=${cursor}`);
         const data = await response.json();
-        setLastTweetId(data.data[data.data.length - 1]._id);
+
+        if(data.data.length > 0) setLastTweetId(data.data[data.data.length - 1]._id);
         
-        if (cursor) {
-            // 加载更多：使用函数式更新，只追加新数据
-            setTweets(prevTweets => {
-                const newTweets = [...prevTweets.map(row => [...row])]; // 深拷贝
-                data.data.forEach((tweet, index) => {
-                    newTweets[index % 3].push({
-                        ...tweet,
-                        tweet_media: tweet.tweet_media ? tweet.tweet_media.split(',') : []
-                    });
-                });
-                return newTweets;
-            });
-        } else {
-            // 新搜索：重置数据
-            const newTweets = [[], [], []];
-            data.data.forEach((tweet, index) => {
-                newTweets[index % 3].push({
+        setTweets(prevTweets => {
+            let targetTweets;
+            let currentIndex = nextIndex;
+    
+            if (cursor) {
+                // 加载更多：基于现有数据
+                targetTweets = prevTweets.map(row => [...row]); // 深拷贝现有数据
+            } else {
+                // 新搜索：但不创建全新数组，而是清空现有数组
+                targetTweets = prevTweets.map(() => []); // 清空但保持数组引用
+                currentIndex = 0;
+            }
+            
+            // 添加新数据，均匀的分配到三个数组中
+            data.data.forEach((tweet) => {
+                targetTweets[currentIndex].push({
                     ...tweet,
                     tweet_media: tweet.tweet_media ? tweet.tweet_media.split(',') : []
                 });
+                currentIndex = (currentIndex + 1) % 3;
             });
-            setTweets(newTweets);
-        }
-        // 恢复滚动位置
-        window.scrollTo(0, currentScrollPosition);
+            setNextIndex(currentIndex); 
+            
+            return targetTweets;
+        });
         setLoading(false);
+
+        if(!cursor) router.replace(`/tweets?${name ? `name=${name}&` : ''}${screen_name ? `screen_name=${screen_name}&` : ''}${text ? `text=${text}&` : ''}`);
     }
 
     const handleClear = () => {

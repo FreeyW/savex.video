@@ -189,7 +189,7 @@ export default function Downloader({ params: { locale } }) {
     const downloadAllMedia = async () => {
         const zip = new JSZip();
         // 先创建一个文件夹
-        const folder = zip.folder('medias_from_twitterxdownload');
+        const folder = zip.folder('medias_from_savexvideo');
         const tempTweets = [...tweets];
         for(let i = 0; i < tempTweets.length; i++){
             const tweet = tempTweets[i];
@@ -209,7 +209,7 @@ export default function Downloader({ params: { locale } }) {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = 'medias_from_twitterxdownload.zip';
+        a.download = 'medias_from_savexvideo.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
